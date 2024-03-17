@@ -1,7 +1,7 @@
-import "./App.css";
+import React from 'react'
 
-function App() {
-  return <>Hello</>;
+export default function hey() {
+  return (
+    <div className='text-3xl text-red-500'>hey</div>
+  )
 }
-
-export default App;
