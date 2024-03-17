@@ -5,15 +5,15 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom";
-import Root from "../public/components/Root";
+import Root from "./components/Root";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import About from "./pages/About";
 import Profile from "./pages/Profile";
-import Error from "../public/components/ErrorPage";
+import Error from "./components/ErrorPage";
 
-export default function hey() {
+export default function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Root />} errorElement={<Error />}>
