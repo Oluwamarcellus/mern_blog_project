@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
+import Header from "./Header";
 
 export default function Root() {
   return (
     <>
-      <nav>Hello Nav</nav>
+      <Header/>
       <main>
         <Outlet />
       </main>
