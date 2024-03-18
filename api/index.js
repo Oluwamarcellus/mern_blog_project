@@ -1,6 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import userRouter from "./routers/userrouter.js";
+import errMiddleware from "./controllers/errmiddleware.js";
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -17,4 +19,12 @@ mongoose
   })
   .catch((err) => console.error(err));
 
+/* Funtional Middlewares*/
+app.use(express.json());
 
+/* Routes middlewares*/
+app.use("/api/user", userRouter);
+
+
+/* Error Middleware */
+app.use(errMiddleware)
