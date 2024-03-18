@@ -12,6 +12,8 @@ import SignUp from "./pages/SignUp";
 import About from "./pages/About";
 import Profile from "./pages/Profile";
 import Error from "./components/ErrorPage";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 export default function App() {
   const router = createBrowserRouter(
@@ -25,5 +27,9 @@ export default function App() {
       </Route>
     )
   );
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  );
 }

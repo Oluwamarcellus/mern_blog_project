@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaMoon } from "react-icons/fa";
 import { FaSun } from "react-icons/fa";
 import { LuMenu } from "react-icons/lu";
 import { Link } from "react-router-dom";
+import { setTheme } from "../redux/theme.slice";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Header() {
-  const [theme, setTheme] = useState("light");
   const [navMenu, setNavMenu] = useState(false);
+  const dispatch = useDispatch();
+  const themeState = useSelector((state) => state.theme);
+
+  // useEffect(() => { 
+  //   console.log(themeState);
+  // }, [themeState])
+
   return (
     <nav className="border-b-2">
       <div className="flex justify-between py-3 px-2 sm:px-10 items-center">
@@ -28,9 +36,9 @@ export default function Header() {
         <div className="flex items-center gap-2">
           <div
             className="bg-[rgba(0,0,0,.01)] border-orange-500 rounded-full border px-3 py-2 cursor-pointer"
-            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            onClick={() => dispatch(setTheme())}
           >
-            {theme === "light" ? <FaMoon /> : <FaSun />}
+            {themeState.mode === "light" ? <FaMoon /> : <FaSun />}
           </div>
           <button className="bg-[rgba(0,0,0,.01)] rounded-xl border-2 border-purple-500 px-3 py-2 cursor-pointer">
             Sign in
