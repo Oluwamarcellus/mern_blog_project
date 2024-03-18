@@ -1,12 +1,18 @@
+/* index.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Integrating tailwind*/
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* index.css */
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 /* Apply Roboto font to all elements */
 html {
   font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+}
+
+button {
+  user-select: none;
 }
