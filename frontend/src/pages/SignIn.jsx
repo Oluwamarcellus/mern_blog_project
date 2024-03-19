@@ -1,8 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignIn() {
+  const [formData, setFormData] = useState({});
+  const [formError, setFormError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const formDataHandler = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    setFormError("");
+    
+    if (!formData.email || !formData.password) {
+      setFormError("Incomplete Credentials");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const data = await fetch("/api/user/signup");
+      if (!data.ok) {
+        setIsLoading(false);
+        const errorData = await data.json();
+        setFormError(errorData.errorMessage);
+        return;
+      }
+      setIsLoading(false);
+      navigate("/signin");
+    } catch (err) {
+      setIsLoading(false);
+      setFormError(err.message);
+    }
+  };
+
   return (
     <div className="py-24 px-4 flex flex-col md:flex-row gap-8 md:items-center mx-auto w-full max-w-3xl">
       <div className="md:flex-1">
@@ -23,6 +57,7 @@ export default function SignIn() {
             Email
           </label>
           <input
+            onChange={formDataHandler}
             className="w-full outline-none border rounded-md bg-[rgba(0,0,0,.02)] p-2 mb-5 focus:border-2 focus:border-purple-500 placeholder:text-sm"
             type="email"
             id="email"
@@ -32,16 +67,24 @@ export default function SignIn() {
             Password
           </label>
           <input
+            onChange={formDataHandler}
             className="w-full outline-none border rounded-md bg-[rgba(0,0,0,.02)] p-2 mb-5 focus:border-2 focus:border-purple-500"
             type="password"
             id="password"
           />
         </form>
+        {formError && (
+          <p className="text-center text-red-500 text-sm pb-2 italic">
+            {formError}
+          </p>
+        )}
         <button
+          disabled={isLoading ? true : false}
+          onClick={handleSubmit}
           type="button"
-          className="bg-gradient-to-r from-orange-500 to-purple-500 rounded-xl px-3 py-2 cursor-pointer w-full text-white mb-3"
+          className={`${isLoading ? "opacity-70" : ""} bg-gradient-to-r from-orange-500 to-purple-500 rounded-xl px-3 py-2 cursor-pointer w-full text-white mb-3`}
         >
-          Sign In
+          {isLoading ? "..." : "Sign In"}
         </button>
         <button
           type="button"
@@ -51,7 +94,7 @@ export default function SignIn() {
           <h1 className="text-sm font-medium">Sign In With Google</h1>
         </button>
         <p className="text-xs">
-          Don't have an accont? {" "}
+          Don't have an accont?{" "}
           <Link to="/signup" className="text-blue-500">
             Sign Up
           </Link>
