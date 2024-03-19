@@ -19,7 +19,7 @@ export default function SignIn() {
       </div>
       <div className="md:flex-1">
         <form>
-          <label className="block font-medium text-sm" for="email">
+          <label className="block font-medium text-sm" htmlFor="email">
             Email
           </label>
           <input
@@ -28,7 +28,7 @@ export default function SignIn() {
             id="email"
             placeholder="yowale@gmail.com"
           />
-          <label className="block font-medium text-sm" for="password">
+          <label className="block font-medium text-sm" htmlFor="password">
             Password
           </label>
           <input
