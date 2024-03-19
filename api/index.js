@@ -25,6 +25,5 @@ app.use(express.json());
 /* Routes middlewares*/
 app.use("/api/user", userRouter);
 
-
 /* Error Middleware */
 app.use(errMiddleware)
