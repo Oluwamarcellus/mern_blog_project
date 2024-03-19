@@ -7,6 +7,7 @@ export default function SignIn() {
   const [formError, setFormError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$/;
 
   const formDataHandler = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -17,6 +18,12 @@ export default function SignIn() {
     
     if (!formData.email || !formData.password) {
       setFormError("Incomplete Credentials");
+      return;
+    }
+
+    const isValidEmail = emailRegex.test(formData.email);
+    if (!isValidEmail) {
+      setFormError("Invalid Email Format");
       return;
     }
 
