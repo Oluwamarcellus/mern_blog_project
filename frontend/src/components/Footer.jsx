@@ -1,17 +1,20 @@
 import { FaGithub } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
     <footer className="border border-purple-200 border-t-4 rounded-t-xl p-6">
       <div className="flex flex-col sm:flex-row sm:justify-between gap-6 pb-4 border-b">
-        <div className="cursor-pointer">
-          <span className="text-white p-2 rounded-md bg-gradient-to-r from-orange-500 to-purple-500">
-            Yowale's
-          </span>
-          Blog
-        </div>
+        <Link to="/">
+          <div className="cursor-pointer">
+            <span className="text-white p-2 rounded-md bg-gradient-to-r from-orange-500 to-purple-500">
+              Yowale's
+            </span>
+            Blog
+          </div>
+        </Link>
         <div className="flex gap-14">
           <div>
             <h2 className="font-semibold text-sm text-gray-500 pb-4">
