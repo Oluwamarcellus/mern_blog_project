@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
-import handleGoogleAuth from "../firebase/handleGoogle";
+import GoogleAuth from "../components/GoogleAuth";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
@@ -110,14 +109,7 @@ export default function SignUp() {
         >
           {isLoading ? "..." : "Sign Up"}
         </button>
-        <button
-          onClick={ handleGoogleAutheGoogleAuth }
-          type="button"
-          className="flex justify-center items-center gap-3 border-2 border-purple-500/50 rounded-xl px-3 py-2 cursor-pointer w-full mb-4"
-        >
-          <FcGoogle />
-          <h1 className="text-sm font-medium">Sign Up With Google</h1>
-        </button>
+        <GoogleAuth val={"Sign Up With Google"} />
         <p className="text-xs">
           Have an accont?{" "}
           <Link to="/signin" className="text-blue-500">
