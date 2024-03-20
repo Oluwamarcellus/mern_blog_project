@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
+import { setActiveUser } from "../redux/user.slice";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
@@ -8,6 +10,7 @@ export default function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$/;
+  const dispatch = useDispatch();
 
   const formDataHandler = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -29,15 +32,23 @@ export default function SignIn() {
 
     setIsLoading(true);
     try {
-      const data = await fetch("/api/user/signup");
+      const data = await fetch("/api/user/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const res = await data.json();
       if (!data.ok) {
         setIsLoading(false);
-        const errorData = await data.json();
-        setFormError(errorData.errorMessage);
+        setFormError(res.errorMessage);
         return;
       }
+
       setIsLoading(false);
-      navigate("/signin");
+      dispatch(setActiveUser(res.user));
+      navigate("/");
     } catch (err) {
       setIsLoading(false);
       setFormError(err.message);

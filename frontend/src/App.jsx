@@ -13,7 +13,8 @@ import About from "./pages/About";
 import Profile from "./pages/Profile";
 import Error from "./components/ErrorPage";
 import { Provider } from "react-redux";
-import { store } from "./redux/store";
+import { store, persistor } from "./redux/store";
+import { PersistGate } from "redux-persist/lib/integration/react";
 
 export default function App() {
   const router = createBrowserRouter(
@@ -28,8 +29,10 @@ export default function App() {
     )
   );
   return (
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
+    <PersistGate persistor={persistor}>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </PersistGate>
   );
 }

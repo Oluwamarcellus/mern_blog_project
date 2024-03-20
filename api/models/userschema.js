@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     },
     anAdmin: {
         type: Boolean,
-        default: true
+        default: false
     },
     imageUrl: {
         type: String,
