@@ -15,6 +15,7 @@ import Error from "./components/ErrorPage";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/lib/integration/react";
+import ProtectRouteGen from "./components/ProtectRouteGen";
 
 export default function App() {
   const router = createBrowserRouter(
@@ -24,7 +25,14 @@ export default function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/about" element={<About />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectRouteGen>
+              <Profile />
+            </ProtectRouteGen>
+          }
+        />
       </Route>
     )
   );
