@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import handleGoogleAuth from "../firebase/handleGoogle";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
@@ -110,6 +111,7 @@ export default function SignUp() {
           {isLoading ? "..." : "Sign Up"}
         </button>
         <button
+          onClick={ handleGoogleAutheGoogleAuth }
           type="button"
           className="flex justify-center items-center gap-3 border-2 border-purple-500/50 rounded-xl px-3 py-2 cursor-pointer w-full mb-4"
         >
