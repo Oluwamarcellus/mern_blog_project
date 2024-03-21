@@ -7,7 +7,7 @@ import { RiDashboard2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 export default function Sidebar({ user, handleSignout }) {
-  user.isAdmin = true;
+  
   return (
     <div className="md:basis-56 p-4 bg-[rgba(0,0,0,.02)]">
       {user && user.isAdmin && (
