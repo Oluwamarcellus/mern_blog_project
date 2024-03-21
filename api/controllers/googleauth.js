@@ -11,7 +11,7 @@ const googleauth = async (req, res, next) => {
     const user = await User.findOne({ email: email });
     if (user) {
       const token = jwt.sign(
-        { id: user._id, isAdmin: user.isAdmin },
+        { id: user._id, anAdmin: user.anAdmin },
         process.env.JWT_SECRET
       );
       const { password: passw, ...others } = user.toObject();
@@ -36,7 +36,7 @@ const googleauth = async (req, res, next) => {
       });
       await newUser.save();
       const token = jwt.sign(
-        { id: newUser._id, isAdmin: newUser.isAdmin },
+        { id: newUser._id, anAdmin: newUser.anAdmin },
         process.env.JWT_SECRET
       );
       const { password: passw, ...others } = newUser.toObject();

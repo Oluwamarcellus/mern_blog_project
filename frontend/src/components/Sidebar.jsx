@@ -7,10 +7,10 @@ import { RiDashboard2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 export default function Sidebar({ user, handleSignout }) {
-  
+  console.log(user);
   return (
     <div className="md:basis-56 p-4 bg-[rgba(0,0,0,.02)]">
-      {user && user.isAdmin && (
+      {user && user.anAdmin && (
         <Link to="/profile?action=dashboard">
           <div className="hover:bg-[rgba(0,0,0,.05)] p-2 rounded-md cursor-pointer mb-3">
             <div className="flex items-center gap-2">
@@ -29,12 +29,12 @@ export default function Sidebar({ user, handleSignout }) {
           </div>
 
           <h2 className="text-white text-xs bg-gray-600 rounded-md py-1 px-2">
-            {user && user.isAdmin ? "Admin" : "User"}
+            {user && user.anAdmin ? "Admin" : "User"}
           </h2>
         </div>
       </Link>
 
-      {user && user.isAdmin && (
+      {user && user.anAdmin && (
         <>
           <Link to="/profile?action=comments">
             <div className="hover:bg-[rgba(0,0,0,.05)] p-2 rounded-md cursor-pointer mt-3">

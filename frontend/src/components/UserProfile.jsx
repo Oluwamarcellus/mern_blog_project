@@ -1,9 +1,14 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { clearActiveUser } from "../redux/user.slice";
 
 export default function UserProfile({ user, handleSignout }) {
   const [disabled, setDisabled] = useState(true);
   const [inputData, setInputData] = useState({});
   const inputRef = useRef(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleUpdate = () => {
     
@@ -11,10 +16,24 @@ export default function UserProfile({ user, handleSignout }) {
     setDisabled(true);
   }
 
-  const handleDelete = () => { 
+  const handleDelete = async () => { 
     const verified = confirm("Delete Account?");
     if (verified) {
-      
+      try {
+        const data = await fetch("/api/user/delete", {
+          method: "POST"
+        });
+        if (data.ok) {
+          alert("Account deleted successfully");
+          dispatch(clearActiveUser());
+          navigate("/signin");
+        } else { 
+          alert("Failed to delete account now try again later");
+        }
+      } catch (err) { 
+        alert("Error deleting account now try again later");
+        console.log(err.message);
+      }  
     }
   }
 
@@ -72,13 +91,12 @@ export default function UserProfile({ user, handleSignout }) {
           </button>}
       </form>
 
-      <button
-        onClick={""}
+      {user?.anAdmin && <button
         type="button"
         className={`bg-gradient-to-r from-orange-500 to-purple-500 rounded-xl px-3 py-2 cursor-pointer w-full text-white mb-5`}
       >
         Create a post
-      </button>
+      </button>}
       <div className="flex justify-between px-2 mt-2">
         <span onClick={handleDelete} className="text-red-500 text-sm cursor-pointer">Delete Account</span>
         <span onClick={ handleSignout } className="text-red-500 text-sm cursor-pointer">Sign Out</span>

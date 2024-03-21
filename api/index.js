@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRouter from "./routers/userrouter.js";
 import errMiddleware from "./controllers/errmiddleware.js";
+import cookieParser from "cookie-parser";
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -21,6 +22,8 @@ mongoose
 
 /* Funtional Middlewares*/
 app.use(express.json());
+app.use(cookieParser());
+
 
 /* Routes middlewares*/
 app.use("/api/user", userRouter);
