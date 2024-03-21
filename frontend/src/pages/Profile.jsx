@@ -30,7 +30,7 @@ export default function Profile() {
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       <Sidebar user={user} handleSignout={ handleSignout } />
-      { param === "profile" && <UserProfile/>}
+      { param === "profile" && <UserProfile user={user} handleSignout={ handleSignout } />}
     </div>
   )
 }

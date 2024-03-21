@@ -8,7 +8,7 @@ export default function Footer() {
     <footer className="border border-purple-200 border-t-4 rounded-t-xl p-6">
       <div className="flex flex-col sm:flex-row sm:justify-between gap-6 pb-4 border-b">
         <Link to="/">
-          <div className="cursor-pointer">
+          <div className="cursor-pointer font-medium">
             <span className="text-white p-2 rounded-md bg-gradient-to-r from-orange-500 to-purple-500">
               Yowale's
             </span>

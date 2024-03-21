@@ -34,7 +34,7 @@ export default function Header() {
     <nav className="border-b-2">
       <div className="flex justify-between py-3 px-2 sm:px-10 items-center">
         <Link to="/">
-          <div className="cursor-pointer">
+          <div className="cursor-pointer font-medium">
             <span className="text-white p-2 rounded-md bg-gradient-to-r from-orange-500 to-purple-500">
               Yowale's
             </span>
