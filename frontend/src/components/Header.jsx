@@ -23,11 +23,13 @@ export default function Header() {
       const data = await fetch("/api/user/signout");
       if (data.ok) {
         dispatch(clearActiveUser());
+        setProfileToggle(false);
       }
     } catch (err) { 
       console.error(err);
     }
   }
+
   return (
     <nav className="border-b-2">
       <div className="flex justify-between py-3 px-2 sm:px-10 items-center">
@@ -79,7 +81,7 @@ export default function Header() {
                     <h1 className="text-sm font-medium">{userState.activeUser.email}</h1>
                   </div>
                   <hr />
-                  <Link to="/profile?action=profile" className="hover:bg-gray-200 text-sm cursor-pointer px-4 py-3 block">Profile</Link>
+                  <Link to="/profile?action=profile" onClick={ () => setProfileToggle(false) } className="hover:bg-gray-200 text-sm cursor-pointer px-4 py-3 block">Profile</Link>
                   <hr />
                   <Link onClick={ handleSignout } className="hover:bg-gray-100 text-sm cursor-pointer px-4 py-3 block">Signout</Link>
                 </div>}
