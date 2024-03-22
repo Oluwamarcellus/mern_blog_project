@@ -9,6 +9,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import app from "../firebase/firbase";
+import { CiEdit } from "react-icons/ci";
 
 export default function UserProfile({ user, handleSignout }) {
   const [disabled, setDisabled] = useState(true);
@@ -53,13 +54,14 @@ export default function UserProfile({ user, handleSignout }) {
   };
 
   const handleUpdate = async () => {
+    setUpdateStatus("")
     try {
       const inputDataSieved = {
         ...(inputData?.username ? { username: inputData.username } : {}),
         ...(inputData?.email ? { email: inputData.email } : {}),
         ...(inputData?.password ? { password: inputData.password } : {}),
-        ...(inputData?.imageUrl ? { imageUrl: inputData.imageUrl } : {})
-      }
+        ...(inputData?.imageUrl ? { imageUrl: inputData.imageUrl } : {}),
+      };
       const data = await fetch("/api/user/update", {
         method: "PUT",
         headers: {
@@ -74,9 +76,11 @@ export default function UserProfile({ user, handleSignout }) {
         setUpdateStatus("Profile Updated Successfully");
       } else {
         setUpdateStatus(res.errorMessage);
+        setDisabled(true);
       }
     } catch (err) {
       setUpdateStatus("Can't update profile, try again");
+      setDisabled(true);
     }
   };
 
@@ -124,11 +128,13 @@ export default function UserProfile({ user, handleSignout }) {
         ref={fileRef}
         onChange={handleImage}
       />
-      <img
-        onClick={() => fileRef.current.click()}
-        src={imageTempUrl || user?.imageUrl}
-        className="cursor-pointer mt-6 h-32 w-32 mx-auto rounded-full border-8 object-cover"
-      />
+      <div className="relative">
+        <img
+          src={imageTempUrl || user?.imageUrl}
+          className="cursor-pointer mt-6 h-32 w-32 mx-auto rounded-full border-8 object-cover"
+        />
+        {!disabled && <CiEdit onClick={() => fileRef.current.click()} className="absolute bg-gray-100/70 border rounded-full cursor-pointer text-red-600 p-10 w-32 h-32 left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]" />}
+      </div>
       {imageUploadError && (
         <p className="text-red-500 text-center text-sm mt-2">
           {imageUploadError}
@@ -167,11 +173,13 @@ export default function UserProfile({ user, handleSignout }) {
         />
 
         {updateStatus && (
-          <p className="text-red-500 text-center text-sm pb-2">{updateStatus}</p>
+          <p className="text-red-500 text-center text-sm pb-2">
+            {updateStatus}
+          </p>
         )}
         {disabled && (
           <button
-            onClick={() => setDisabled(false)}
+            onClick={() => { setDisabled(false); setUpdateStatus(""); setImageUploadError(""); }}
             type="button"
             className={`flex justify-center items-center gap-3 border-2 border-purple-500/50 rounded-xl px-3 py-2 cursor-pointer w-full mb-4`}
           >
