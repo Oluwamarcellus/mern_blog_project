@@ -39,7 +39,7 @@ export default function () {
           placeholder="Type here..."
           required
         />
-        <button type="SUBMIT" className="bg-gradient-to-r from-orange-500 to-purple-500 rounded-xl px-3 py-2 cursor-pointer w-full text-white mt-14 mb-2 ">Upload post</button>
+        <button type="submit" className="bg-gradient-to-r from-orange-500 to-purple-500 rounded-xl px-3 py-2 cursor-pointer w-full text-white mt-14 mb-2 ">Upload post</button>
       </form>
     </div>
   );

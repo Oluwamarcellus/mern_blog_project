@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRouter from "./routers/userrouter.js";
+import postRouter from "./routers/postrouter.js";
 import errMiddleware from "./controllers/errmiddleware.js";
 import cookieParser from "cookie-parser";
 
@@ -27,6 +28,7 @@ app.use(cookieParser());
 
 /* Routes middlewares*/
 app.use("/api/user", userRouter);
+app.use("/api/post", postRouter);
 
 /* Error Middleware */
 app.use(errMiddleware)
