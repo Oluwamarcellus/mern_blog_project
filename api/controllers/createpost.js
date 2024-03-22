@@ -2,12 +2,11 @@ import Post from "../models/postschema.js";
 import errHandler from "./errhandler.js";
 
 const createPost = async (req, res, next) => {
-    console.log(req.user);
   if (!req.user?.anAdmin) {
     next(errHandler("Only Admins are allowed to create post", 403));
   }
   if (!req.body?.title || !req.body?.userId || !req.body?.content) {
-    return next(errHandler("Incomplete Required Credentials", 401));
+    return next(errHandler("Incomplete Required Credentials", 400));
   }
     try {
         const newPost = Post({ ...req.body });
