@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setActiveUser, clearActiveUser } from "../redux/user.slice";
 import {
@@ -22,6 +22,7 @@ export default function UserProfile({ user, handleSignout }) {
   const fileRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$/;
 
   useEffect(() => {
     if (imageData) {
@@ -54,7 +55,24 @@ export default function UserProfile({ user, handleSignout }) {
   };
 
   const handleUpdate = async () => {
-    setUpdateStatus("")
+    setUpdateStatus("");
+    if (Object.keys(inputData).length === 0) {
+      setDisabled(true);
+      return;
+    }
+
+    if (inputData.email && !emailRegex.test(inputData.email)) {
+      setUpdateStatus("Invalid Email Format");
+      setDisabled(true);
+      return;
+    }
+
+    if (inputData.password && inputData.password.length < 8) {
+      setUpdateStatus("Password must be at least 8 characters");
+      setDisabled(true);
+      return;
+    }
+
     try {
       const inputDataSieved = {
         ...(inputData?.username ? { username: inputData.username } : {}),
@@ -79,7 +97,7 @@ export default function UserProfile({ user, handleSignout }) {
         setDisabled(true);
       }
     } catch (err) {
-      setUpdateStatus("Can't update profile, try again");
+      setUpdateStatus(err.message || "Can't update profile, try again");
       setDisabled(true);
     }
   };
@@ -179,7 +197,7 @@ export default function UserProfile({ user, handleSignout }) {
         )}
         {disabled && (
           <button
-            onClick={() => { setDisabled(false); setUpdateStatus(""); setImageUploadError(""); }}
+            onClick={() => { setDisabled(false);  setUpdateStatus(""); setImageUploadError(""); }}
             type="button"
             className={`flex justify-center items-center gap-3 border-2 border-purple-500/50 rounded-xl px-3 py-2 cursor-pointer w-full mb-4`}
           >
@@ -203,12 +221,14 @@ export default function UserProfile({ user, handleSignout }) {
       </form>
 
       {user?.anAdmin && (
+        <Link to="/create-post">
         <button
           type="button"
           className={`bg-gradient-to-r from-orange-500 to-purple-500 rounded-xl px-3 py-2 cursor-pointer w-full text-white mb-5`}
         >
           Create a post
-        </button>
+          </button>
+          </Link>
       )}
       <div className="flex justify-between px-2 mt-2">
         <span

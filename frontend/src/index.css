@@ -16,3 +16,7 @@ html {
 button {
   user-select: none;
 }
+
+.ql-editor {
+  font-size: 1.05rem;
+}

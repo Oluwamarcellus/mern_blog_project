@@ -51,8 +51,8 @@ export default function Header() {
           <Link to="/about" className="hover:opacity-50">
             About
           </Link>
-          <Link to="/" className="hover:opacity-50">
-            Projects
+          <Link to="/profile?action=profile" className="hover:opacity-50">
+            Profile
           </Link>
         </ul>
         <div className="flex items-center gap-2">
@@ -81,6 +81,9 @@ export default function Header() {
                     <h1 className="text-sm font-medium">{userState.activeUser.email}</h1>
                   </div>
                   <hr />
+                  {userState.activeUser?.anAdmin && <><Link to="/profile?action=dashboard" onClick={ () => setProfileToggle(false) } className="hover:bg-gray-200 text-sm cursor-pointer px-4 py-3 block">Dashboard</Link>
+                  <hr /></>
+                  }
                   <Link to="/profile?action=profile" onClick={ () => setProfileToggle(false) } className="hover:bg-gray-200 text-sm cursor-pointer px-4 py-3 block">Profile</Link>
                   <hr />
                   <Link onClick={ handleSignout } className="hover:bg-gray-100 text-sm cursor-pointer px-4 py-3 block">Signout</Link>
@@ -104,8 +107,8 @@ export default function Header() {
         <Link to="/about" className="hover:opacity-50">
           About
         </Link>
-        <Link to="/" className="hover:opacity-50">
-          Projects
+        <Link to="/profile?action=profile" className="hover:opacity-50">
+          Profile
         </Link>
       </ul>
     </nav>

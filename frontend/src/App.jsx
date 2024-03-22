@@ -16,6 +16,8 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import ProtectRouteGen from "./components/ProtectRouteGen";
+import Createpost from "./pages/Createpost";
+import ProtectRouteAdmin from "./components/ProtectRouteAdmin";
 
 export default function App() {
   const router = createBrowserRouter(
@@ -31,6 +33,14 @@ export default function App() {
             <ProtectRouteGen>
               <Profile />
             </ProtectRouteGen>
+          }
+        />
+        <Route
+          path="/create-post"
+          element={
+            <ProtectRouteAdmin>
+              <Createpost />
+            </ProtectRouteAdmin>
           }
         />
       </Route>
