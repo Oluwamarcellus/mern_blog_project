@@ -3,7 +3,7 @@ import { CiSearch } from "react-icons/ci";
 import { FaMoon } from "react-icons/fa";
 import { FaSun } from "react-icons/fa";
 import { LuMenu } from "react-icons/lu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setTheme } from "../redux/theme.slice";
 import { useSelector, useDispatch } from "react-redux";
 import { clearActiveUser } from "../redux/user.slice"
@@ -14,6 +14,8 @@ export default function Header() {
   const themeState = useSelector((state) => state.theme);
   const userState = useSelector((state) => state.user);
   const [profileToggle, setProfileToggle] = useState(false);
+  const [inputData, setInputData] = useState("");
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   console.log(themeState);
@@ -30,6 +32,14 @@ export default function Header() {
     }
   }
 
+  const handleSubmission = (e) => {
+    if (e.key === 'Enter') {
+      if (inputData) { 
+        navigate(`/search?searchterm=${inputData}`);
+      }
+    }
+  }
+
   return (
     <nav className="border-b-2">
       <div className="flex justify-between py-3 px-2 sm:px-10 items-center">
@@ -41,9 +51,11 @@ export default function Header() {
             Blog
           </div>
         </Link>
-        <div className="rounded-full border px-3 py-2 cursor-pointer">
-          <CiSearch />
+        <div onClick={ () => navigate('/search')} className="md:hidden rounded-full border px-3 py-2 cursor-pointer">
+        <CiSearch className="" />
         </div>
+        <input onKeyDown={ handleSubmission} onChange={ (e) => setInputData(e.target.value)} className="rounded-lg border px-2 py-2 text-sm hidden md:block outline-none" type="text" placeholder="Search..." />
+        
         <ul className="hidden sm:flex gap-3 cursor-pointer font-medium text-sm">
           <Link to="/" className="hover:opacity-50">
             Home
