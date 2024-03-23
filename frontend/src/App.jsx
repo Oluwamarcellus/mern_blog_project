@@ -18,6 +18,8 @@ import { PersistGate } from "redux-persist/lib/integration/react";
 import ProtectRouteGen from "./components/ProtectRouteGen";
 import Createpost from "./pages/Createpost";
 import ProtectRouteAdmin from "./components/ProtectRouteAdmin";
+import Search from "./pages/Search";
+import PostPage from "./pages/PostPage";
 
 export default function App() {
   const router = createBrowserRouter(
@@ -42,6 +44,14 @@ export default function App() {
               <Createpost />
             </ProtectRouteAdmin>
           }
+        />
+        <Route
+          path="/search"
+          element={<Search />}
+        />
+        <Route
+          path="/post/:postId"
+          element={<PostPage />}
         />
       </Route>
     )

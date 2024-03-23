@@ -9,6 +9,7 @@ import {
 } from "firebase/storage";
 import app from "../firebase/firbase";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function () {
   const [postData, setPostData] = useState({});
@@ -20,12 +21,13 @@ export default function () {
   const [postUploadError, setPostUploadError] = useState("");
   const [postUploadSuccess, setPostUploadSuccess] = useState("");
   const user = useSelector((state) => state.user.activeUser);
+  const navigate = useNavigate();
 
   const handleImageChange = (e) => {
     try {
       setImageData(e.target.files[0]);
       setImageUploadError("");
-      setPostUploadSuccess("")
+      setPostUploadSuccess("");
     } catch (err) {
       console.log(err.mesage);
     }
@@ -35,43 +37,46 @@ export default function () {
     if (!imageData) {
       setImageUploadError("Please select an image");
     }
-
-    const storage = getStorage(app);
-    const fileName = imageData.name + new Date().getTime();
-    const storageRef = ref(storage, fileName);
-    const task = uploadBytesResumable(storageRef, imageData);
-    task.on(
-      "state_changed",
-      (snapshot) => {  
-        setImageUploadProgress(true);
-      },
-      (error) => {
-        setImageUploadError(error);
-        setImageUploadProgress(false);
-      },
-      () => {
-        getDownloadURL(task.snapshot.ref).then((downloadURL) => {
-          setPostData({ ...postData, imageUrl: downloadURL });
-          setImageUrl(downloadURL);
+    try {
+      const storage = getStorage(app);
+      const fileName = imageData.name + new Date().getTime();
+      const storageRef = ref(storage, fileName);
+      const task = uploadBytesResumable(storageRef, imageData);
+      task.on(
+        "state_changed",
+        (snapshot) => {
+          setImageUploadProgress(true);
+        },
+        (error) => {
+          setImageUploadError(error.message);
           setImageUploadProgress(false);
-        });
-      }
-    );
+        },
+        () => {
+          getDownloadURL(task.snapshot.ref).then((downloadURL) => {
+            setPostData({ ...postData, imageUrl: downloadURL });
+            setImageUrl(downloadURL);
+            setImageUploadProgress(false);
+          });
+        }
+      );
+    } catch (err) {
+      setImageUploadError("Error uploading image, try again later!");
+    }
   };
 
   const handlePostUpload = async () => {
     setPostUploadSuccess("");
     setPostUploadProgress(true);
-    if (Object.keys(postData).length === 0) { 
+    if (Object.keys(postData).length === 0) {
       setPostUploadError("Please fill out the form");
       return;
-    };
+    }
     const { content, title } = postData;
-    if (!content || !title ) { 
+    if (!content || !title) {
       setPostUploadError("Post content and title cannot be empty");
       return;
     }
-    
+
     try {
       const data = await fetch("/api/post/create", {
         method: "POST",
@@ -87,13 +92,14 @@ export default function () {
       } else {
         setPostUploadSuccess("Post published successfully");
         setPostUploadProgress(false);
+        console.log(res);
+        navigate(`/post/${res?.post?._id}`);
       }
-
-    } catch (err) { 
+    } catch (err) {
       setPostUploadError(err.message || "Failed to upload, try again later");
       setPostUploadProgress(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen p-3 mx-auto max-w-3xl">
@@ -146,7 +152,9 @@ export default function () {
             {imageUploadError}!
           </p>
         )}
-        {imageUrl && <img className="h-80 w-full object-cover pt-4" src={ imageUrl} />}
+        {imageUrl && (
+          <img className="h-80 w-full object-cover pt-4" src={imageUrl} />
+        )}
         <ReactQuill
           className="mt-4 h-80"
           theme="snow"
@@ -161,13 +169,19 @@ export default function () {
           disabled={imageUploadProgress || postUploadProgress}
           type="button"
           className={`${
-            imageUploadProgress || postUploadProgress && "opacity-50"
+            imageUploadProgress || (postUploadProgress && "opacity-50")
           } bg-gradient-to-r from-orange-500 to-purple-500 rounded-xl px-3 py-2 cursor-pointer w-full text-white mt-14 mb-2`}
         >
           Upload post
         </button>
-        {postUploadError && <p className="text-center text-red-500 text-sm">{postUploadError}!</p>}
-        {postUploadSuccess && <p className="text-center text-green-500 text-sm">{postUploadSuccess}!</p>}
+        {postUploadError && (
+          <p className="text-center text-red-500 text-sm">{postUploadError}!</p>
+        )}
+        {postUploadSuccess && (
+          <p className="text-center text-green-500 text-sm">
+            {postUploadSuccess}!
+          </p>
+        )}
       </form>
     </div>
   );
