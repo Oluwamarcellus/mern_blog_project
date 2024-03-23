@@ -2,10 +2,12 @@ import Post from "../models/postschema.js";
 
 const getpost = async (req, res, next) => { 
     try {
-        const offset = req.query.offset || 0;
-        const limit = req.query.limit || 10;
+        const offset = parseInt(req.query.offset) || 0;
+        const limit = parseInt(req.query.limit) || null;
         const sortBy = req.query?.sortBy && req.query.sortBy === 'asc' ? 1 : -1;
 
+        console.log(req.query.searchterm);
+        
         const posts = await Post.find({
             ...(req.query?.postId && { _id: req.query.postId }),
             ...(req.query?.userId && { userId: req.query.userId }),
