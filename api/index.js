@@ -5,6 +5,8 @@ import userRouter from "./routers/userrouter.js";
 import postRouter from "./routers/postrouter.js";
 import errMiddleware from "./controllers/errmiddleware.js";
 import cookieParser from "cookie-parser";
+import morgan from "morgan";
+
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -24,6 +26,7 @@ mongoose
 /* Funtional Middlewares*/
 app.use(express.json());
 app.use(cookieParser());
+app.use(morgan('combined'));
 
 
 /* Routes middlewares*/

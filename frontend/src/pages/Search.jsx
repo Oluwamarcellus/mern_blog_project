@@ -13,15 +13,15 @@ export default function Search() {
     <div className="flex flex-col md:flex-row min-h-screen">
       <div className="md:border-r border-[rgba(0,0,0,.4)] w-full md:w-64 ">
         <form className="px-4 py-8 text-sm">
-          <label className="font-medium" htmlFor="query">
+          <label className="font-medium" htmlFor="searchterm">
             Search Word:{" "}
           </label>
           <input
             className="w-28 p-3 mb-8 placeholder:text-xs outline-none border rounded-lg"
             type="text"
             placeholder="Search for..."
-            id="query"
-            name="query"
+            id="searchterm"
+            name="searchterm"
           />
           <div></div>
           <label className="font-semibold " htmlFor="sort">
