@@ -1,14 +1,69 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AiFillLike } from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
 
-export default function Comment() {
+export default function Comment({ postId }) {
   const user = useSelector((state) => state.user.activeUser);
   const [textareaLimit, setTextareaLimit] = useState(200);
-  const [commentData, setCommentData] = useState(null);
+  const [textareaData, setTextareaData] = useState("");
+  const [commentData, setCommentData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  console.log(user);
+  const handleCommentSubmit = async () => {
+    if (!textareaData) return;
+    try {
+      setIsLoading(true);
+      const data = await fetch("/api/comment/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          content: textareaData,
+          postId: postId,
+          userId: user._id,
+          userImage: user.imageUrl,
+          userName: user.username,
+        }),
+      });
+      const res = await data.json();
+      if (!data.ok) {
+        throw new Error(res.errorMessage);
+      } else {
+        setIsLoading(false);
+        setCommentData([res, ...commentData]);
+        setTextareaData("");
+      }
+    } catch (err) {
+      setIsLoading(false);
+      console.log(err.message);
+    }
+  };
+
+  useEffect(() => {
+    const fetchComment = async () => {
+      try {
+        setIsLoading(true);
+        const data = await fetch(`/api/comment/getcomment/${postId}`);
+        const res = await data.json();
+        if (!data.ok) {
+          throw new Error(res.errorMessage);
+        } else {
+          setIsLoading(false);
+          setCommentData(res);
+          setTextareaData("");
+        }
+      } catch (err) {
+        setIsLoading(false);
+        console.log(err.message);
+      }
+    };
+
+    fetchComment();
+  }, [postId]);
+  
   return (
     <div className="pt-2">
       <div>
@@ -34,13 +89,22 @@ export default function Comment() {
                 id="comment"
                 maxLength={200}
                 placeholder="Write you comment..."
-                onChange={(e) => setTextareaLimit(200 - e.target.value.length)}
+                onChange={(e) => {
+                  setTextareaLimit(200 - e.target.value.length);
+                  setTextareaData(e.target.value);
+                }}
               ></textarea>
               <div className="flex items-center justify-between py-2">
                 <span className="text-xs text-gray-500/70">
                   {textareaLimit.toString()} characters remaining
                 </span>
-                <button className="text-sm font-medium border-2 border-teal-500 hover:bg-teal-300 hover:border-teal-300 hover:text-white px-3 py-2 rounded-lg">
+                <button
+                  disabled={isLoading}
+                  onClick={handleCommentSubmit}
+                  className={`${
+                    isLoading ? "opacity-50" : ""
+                  } text-sm font-medium border-2 border-teal-500 hover:bg-teal-300 hover:border-teal-300 hover:text-white px-3 py-2 rounded-lg`}
+                >
                   Submit
                 </button>
               </div>
@@ -56,42 +120,57 @@ export default function Comment() {
         )}
       </div>
       <div className="py-6 ">
-        {!commentData ? (
+        {commentData.length > 0 ? (
           <div className="">
             <div className="text-sm">
               <h1>
-                Comments <span className="border p-1 border-black/40">48</span>
+                Comments{" "}
+                <span className="border p-1 border-black/40">
+                  {commentData.length}
+                </span>
               </h1>
             </div>
 
             <div className="p-6 my-4">
-                          
-              <div className="flex gap-3 border-b py-4">
-                <img
-                  className="h-10 w-10 rounded-full object-cover"
-                  src={user.imageUrl}
-                  alt=""
-                />
-                <div>
-                  <h1 className="text-sm mb-2 font-medium">@{user.username}</h1>
-                  <p className="text-xs text-gray-500/90">
-                    You are one of youtubers that still give me hope not to give
-                    up on programing and continue learning like you, thank you
-                    sir much love- Zambia.
-                  </p>
-                  <div className="flex mt-3 gap-4">
-                    <div className="flex items-center gap-1">
-                      <AiFillLike />
-                      <span className="text-xs">1 like</span>
+              {commentData.map((comment, i) => (
+                <div key={i} className="flex gap-3 border-b py-4">
+                  <img
+                    className="h-10 w-10 rounded-full object-cover"
+                    src={comment.userImage || ""}
+                    alt=""
+                  />
+                  <div>
+                    <h1 className="text-sm mb-2 font-medium">
+                      @{comment.userName || "Anonymous"}
+                    </h1>
+                    <p className="text-xs text-gray-500/90">
+                      {comment.content}
+                    </p>
+                    <div className="flex mt-3 gap-4">
+                      <div className="flex items-center gap-1">
+                        <AiFillLike className="cursor-pointer hover:text-blue-400" />
+                        <span className="text-xs">
+                          {comment.totalLikes}{" "}
+                          {comment.totalLikes > 1 ? "likes" : "like"}
+                        </span>
+                      </div>
+
+                      { (user?.anAdmin || user?._id === comment.userId) && <div className="group flex items-center gap-1 cursor-pointer">
+                        <MdDelete />
+                        <span className="group-hover:text-red-400 text-xs">Delete</span>
+                      </div> }
+
                     </div>
                   </div>
                 </div>
-              </div>
-                          
+              ))}
+
             </div>
           </div>
+        ) : isLoading ? (
+          <h1 className="text-center">Fetching comments...</h1>
         ) : (
-          <h1 className="text-center">Fetching Ccomments...</h1>
+          <h1 className="text-center">No comments</h1>
         )}
       </div>
     </div>
