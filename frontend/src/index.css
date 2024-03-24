@@ -20,3 +20,64 @@ button {
 .ql-editor {
   font-size: 1.05rem;
 }
+
+
+/* Styles for react quill*/
+.quill-control p {
+  margin-bottom: .5rem
+}
+
+.quill-control h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: sans-serif;
+  margin: 1.5rem 0
+}
+
+.quill-control h2 {
+  font-size: 1.4rem;
+  font-family: sans-serif;
+  margin: 1.5rem 0
+}
+
+.quill-control ul li {
+  margin: 1.15rem 0 1.15rem 1.3rem;
+  list-style-type: circle
+}
+
+.quill-control ol li {
+  margin: 1.15rem 0 1.15rem 1.3rem;
+  list-style-type: decimal
+}
+
+.quill-control a {
+  color: #4995c7;
+  text-decoration: none
+}
+
+.quill-control a:hover {
+  text-decoration: underline
+}
+
+.quill-control pre {
+  background-color: #1e293b;
+  border: 1px solid rgb(61,69,83);
+  color: #e8e7e7;
+  white-space: pre-wrap;
+  padding: .5rem;
+  border-radius: .5rem;
+  margin-bottom: .5rem
+}
+
+.quill-control code {
+  background-color: #ececec;
+  padding: .25rem;
+  border-radius: .25rem;
+  font-size: .9rem
+}
+
+.dark .quill-control code {
+  background-color: #bec2c9;
+  border: 1px solid rgb(61,69,83);
+  border: none
+}
