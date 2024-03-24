@@ -21,8 +21,9 @@ export default function Footer() {
               FOLLOW US
             </h2>
             <div className="flex flex-col text-sm text-gray-500 gap-3">
-              <a href="#">Github</a>
-              <a href="#">Twitter</a>
+              <a href="https://github.com/Oluwamarcellus" target="_blank">Github</a>
+              <a href="https://twitter.com/Hayyddex" target="_blank">Twitter</a>
+              <a href="https://www.linkedin.com/in/devmarc" target="_blank">LinkedIn</a>
             </div>
           </div>
           <div className="flex flex-col">
