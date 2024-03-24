@@ -51,7 +51,7 @@ export default function Home() {
         <h2 className="text-center text-2xl font-medium">Recent Posts</h2>
         <div className="my-4 flex flex-wrap justify-center gap-x-8 gap-y-4">
           {postData.length > 0 ? (
-            postData.map((post, i) => <Post data={post} height={ 2 } />)
+            postData.map((post, i) => <Post key={i} data={post} height={ 2 } />)
           ) : isLoading ? (
             <h2>Loading...</h2>
           ) : (
