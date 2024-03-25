@@ -38,13 +38,13 @@ export default function Footer() {
       <div className="pt-5 text-gray-500 flex flex-col sm:flex-row sm:justify-between gap-5">
         <p className="text-sm">&copy; 2024 Yowale's blog</p>
         <div className="flex gap-4 text-xl">
-          <a href="https://github.com" target="_blank">
+          <a href="https://github.com/Oluwamarcellus" target="_blank">
             <FaGithub />
           </a>
-          <a href="https://x.com" target="_blank">
+          <a href="https://twitter.com/Hayyddex" target="_blank">
             <FaTwitter />
           </a>
-          <a href="https://linkedin.com" target="_blank">
+          <a href="https://www.linkedin.com/in/devmarc" target="_blank">
             <FaLinkedin />
           </a>
         </div>

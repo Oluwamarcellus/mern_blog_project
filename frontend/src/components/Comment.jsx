@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AiFillLike } from "react-icons/ai";
@@ -10,6 +10,7 @@ export default function Comment({ postId }) {
   const [textareaData, setTextareaData] = useState("");
   const [commentData, setCommentData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const textAreaRef = useRef(null);
 
   const handleCommentSubmit = async () => {
     if (!textareaData) return;
@@ -35,6 +36,7 @@ export default function Comment({ postId }) {
         setIsLoading(false);
         setCommentData([res, ...commentData]);
         setTextareaData("");
+        textAreaRef.current.value = "";
       }
     } catch (err) {
       setIsLoading(false);
@@ -64,6 +66,40 @@ export default function Comment({ postId }) {
     fetchComment();
   }, [postId]);
   
+  const handleLike = async (commentId) => {
+    try { 
+      const data = await fetch(`/api/comment/likecomment/${commentId}`, {
+        method: "PUT",
+      });
+      const res = await data.json();
+      if (!data.ok) {
+        throw new Error(res.errorMessage);
+      } else {
+        setCommentData(commentData.map((comment) => {
+          return comment._id !== commentId ? comment : res;
+        }));
+      }
+    } catch (err) {
+      console.log(err.message);
+     }
+  }
+  
+  const handleDelete = async (commentId) => {
+    try { 
+      const data = await fetch(`/api/comment/deletecomment/${commentId}`, {
+        method: "DELETE",
+      });
+      const res = await data.json();
+      if (!data.ok) {
+        throw new Error(res.errorMessage);
+      } else {
+        setCommentData(commentData.filter((comment) => comment._id !== commentId));
+      }
+    } catch (err) {
+      console.log(err.message);
+     }
+  }
+
   return (
     <div className="pt-2">
       <div>
@@ -89,6 +125,7 @@ export default function Comment({ postId }) {
                 id="comment"
                 maxLength={200}
                 placeholder="Write you comment..."
+                ref={ textAreaRef}
                 onChange={(e) => {
                   setTextareaLimit(200 - e.target.value.length);
                   setTextareaData(e.target.value);
@@ -148,15 +185,15 @@ export default function Comment({ postId }) {
                     </p>
                     <div className="flex mt-3 gap-4">
                       <div className="flex items-center gap-1">
-                        <AiFillLike className="cursor-pointer hover:text-blue-400" />
+                        <AiFillLike onClick={() => handleLike(comment._id)} className={`${user && comment.likes.includes(user._id) ? "text-blue-400" : ""} cursor-pointer`} />
                         <span className="text-xs">
                           {comment.totalLikes}{" "}
                           {comment.totalLikes > 1 ? "likes" : "like"}
                         </span>
                       </div>
 
-                      { (user?.anAdmin || user?._id === comment.userId) && <div className="group flex items-center gap-1 cursor-pointer">
-                        <MdDelete />
+                      { (user?.anAdmin || user?._id === comment.userId) && <div onClick={() => handleDelete(comment._id)} className="group flex items-center gap-1 cursor-pointer">
+                        <MdDelete className="group-hover:text-red-500"/>
                         <span className="group-hover:text-red-400 text-xs">Delete</span>
                       </div> }
 
