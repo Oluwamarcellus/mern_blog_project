@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar";
 import UserProfile from "../components/UserProfile";
 import { useSelector, useDispatch } from "react-redux";
 import { clearActiveUser } from "../redux/user.slice";
+import Dashboard from "../components/Dashboard";
 
 export default function Profile() {
   const location = useLocation();
@@ -31,6 +32,7 @@ export default function Profile() {
     <div className="flex flex-col md:flex-row min-h-screen">
       <Sidebar user={user} handleSignout={ handleSignout } />
       { param === "profile" && <UserProfile user={user} handleSignout={ handleSignout } />}
+      { param === "dashboard" && <Dashboard />}
     </div>
   )
 }
