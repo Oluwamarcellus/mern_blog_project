@@ -5,6 +5,9 @@ import UserProfile from "../components/UserProfile";
 import { useSelector, useDispatch } from "react-redux";
 import { clearActiveUser } from "../redux/user.slice";
 import Dashboard from "../components/Dashboard";
+import AdminPagePost from "../components/AdminPagePost";
+import AdminPageComment from "../components/AdminPageComment";
+import AdminPageUser from "../components/AdminPageUser";
 
 export default function Profile() {
   const location = useLocation();
@@ -33,6 +36,9 @@ export default function Profile() {
       <Sidebar user={user} handleSignout={ handleSignout } />
       { param === "profile" && <UserProfile user={user} handleSignout={ handleSignout } />}
       { param === "dashboard" && <Dashboard />}
+      { param === "posts" && <AdminPagePost />}
+      { param === "comments" && <AdminPageComment />}
+      { param === "users" && <AdminPageUser />}
     </div>
   )
 }

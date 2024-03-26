@@ -82,12 +82,13 @@ export const getAllComents = async (req, res, next) => {
       today.getMonth() - 1,
       today.getDate()
     );
+    const comments = await Comment.find().sort({ createdAt: -1 });
     const totalComment = await Comment.countDocuments();
     const totalCommentLastMonth = await Comment.countDocuments({
       createdAt: {$gte: lastMonth}
     });
 
-    res.status(200).json({ totalComment, totalCommentLastMonth });
+    res.status(200).json({ comments, totalComment, totalCommentLastMonth });
   } catch (err) { 
     next(err);
   }

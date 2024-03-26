@@ -38,7 +38,7 @@ export default function Dashboard() {
 
   const getPosts = async () => {
     try {
-      const data = await fetch("/api/post/getpost");
+      const data = await fetch("/api/post/getpost?limit=5");
       const res = await data.json();
       if (!data.ok) {
         throw new Error(res.errorMessage);
@@ -75,6 +75,12 @@ export default function Dashboard() {
             </div>
             <p className="text-sm">Last month</p>
           </div>
+          <Link
+            to="/profile?action=users"
+            className="block mx-auto text-center bg-teal-400 p-2 rounded-lg text-white mt-4 cursor-pointer hover:bg-teal-300 text-sm"
+          >
+            Explore
+          </Link>
         </div>
 
         <div className="w-full md:w-[31%] bg-gray-300/20 rounded-lg p-3 shadow-md">
@@ -94,6 +100,12 @@ export default function Dashboard() {
             </div>
             <p className="text-sm">Last month</p>
           </div>
+          <Link
+            to="/profile?action=posts"
+            className="block mx-auto text-center bg-teal-400 p-2 rounded-lg text-white mt-4 cursor-pointer hover:bg-teal-300 text-sm"
+          >
+            Explore
+          </Link>
         </div>
 
         <div className="w-full md:w-[31%] bg-gray-300/20 rounded-lg p-3 shadow-md">
@@ -115,16 +127,22 @@ export default function Dashboard() {
             </div>
             <p className="text-sm">Last month</p>
           </div>
+          <Link
+            to="/profile?action=comments"
+            className="block mx-auto text-center bg-teal-400 p-2 rounded-lg text-white mt-4 cursor-pointer hover:bg-teal-300 text-sm"
+          >
+            Explore
+          </Link>
         </div>
       </div>
 
       <div className="mt-10">
-        <div>
+        <div className="md:max-w-[70%] md:mx-auto">
           <div className="flex justify-between px-4 py-2 items-center">
             <h2 className="font-medium">Recent posts</h2>
             <Link
               className="border p-2 rounded-lg text-sm font-medium bg-teal-400 text-white hover:bg-teal-200"
-              to=""
+              to="/profile?action=posts"
             >
               See all
             </Link>
@@ -132,18 +150,25 @@ export default function Dashboard() {
           <div className="flex rounded-md bg-gray-100/80 py-2 text-sm font-medium justify-between px-4">
             <h2 className="w-[25%]">POST IMAGE</h2>
             <h2 className="w-[50%]">POST TITLE</h2>
-            <h2 className="w-[25%] text-end">TIME CREATED</h2>
+            <h2 className="w-[25%] text-start">TIME CREATED</h2>
           </div>
           {posts &&
             posts.posts.map((post, i) => {
               return (
                 <div
                   key={i}
-                  className="flex rounded-md py-2 text-sm font-medium justify-between items-center px-4"
+                  className="flex gap-2 rounded-md py-2 text-sm font-medium justify-between items-center px-4"
                 >
-                      <h2 className="w-[25%] rounded-lg overflow-hidden"><img className="rounded-lg h-10 w-16" src={ post.postImage} /></h2>
-                      <h2 className="w-[50%] font-thin text-sm">{post.title}</h2>
-                      <h2 className="w-[25%] text-end text-xs font-thin">{new Date(post.createdAt).toLocaleString()}</h2>
+                  <h2 className="w-[25%] rounded-lg overflow-hidden">
+                    <img
+                      className="rounded-lg h-10 w-16"
+                      src={post.postImage}
+                    />
+                  </h2>
+                  <h2 className="w-[50%] font-thin text-sm">{post.title}</h2>
+                  <h2 className="w-[25%] text-start text-xs font-thin">
+                    {new Date(post.createdAt).toLocaleString()}
+                  </h2>
                 </div>
               );
             })}

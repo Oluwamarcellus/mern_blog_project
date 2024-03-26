@@ -96,6 +96,9 @@ export default function Header() {
                   {userState.activeUser?.anAdmin && <><Link to="/profile?action=dashboard" onClick={ () => setProfileToggle(false) } className="hover:bg-gray-200 text-sm cursor-pointer px-4 py-3 block">Dashboard</Link>
                   <hr /></>
                   }
+                  {userState.activeUser?.anAdmin && <><Link to="/create-post" onClick={ () => setProfileToggle(false) } className="hover:bg-gray-200 text-sm cursor-pointer px-4 py-3 block">Create post</Link>
+                  <hr /></>
+                  }
                   <Link to="/profile?action=profile" onClick={ () => setProfileToggle(false) } className="hover:bg-gray-200 text-sm cursor-pointer px-4 py-3 block">Profile</Link>
                   <hr />
                   <Link onClick={ handleSignout } className="hover:bg-gray-100 text-sm cursor-pointer px-4 py-3 block">Signout</Link>
