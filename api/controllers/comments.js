@@ -72,3 +72,23 @@ export const deleteComment = async (req, res, next) => {
     next(err);
   }
 };
+
+
+export const getAllComents = async (req, res, next) => { 
+  try { 
+    const today = new Date();
+    const lastMonth = new Date(
+      today.getFullYear(),
+      today.getMonth() - 1,
+      today.getDate()
+    );
+    const totalComment = await Comment.countDocuments();
+    const totalCommentLastMonth = await Comment.countDocuments({
+      createdAt: {$gte: lastMonth}
+    });
+
+    res.status(200).json({ totalComment, totalCommentLastMonth });
+  } catch (err) { 
+    next(err);
+  }
+}
