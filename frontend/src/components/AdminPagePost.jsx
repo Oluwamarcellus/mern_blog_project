@@ -4,6 +4,26 @@ import { Link } from "react-router-dom";
 export default function AdminPagePost() {
   const [posts, setPosts] = useState(null);
 
+  const handleDelete = async (postId) => { 
+    const validate = confirm("Proceed with deleting post?");
+    if (validate && postId) { 
+      try {
+        const data = await fetch(`/api/post/deletepost/${postId}`, {
+          method: "DELETE",
+        });
+        const res = await data.json();
+        if (!data.ok) {
+          throw new Error(res.errorMessage);
+        } else {
+          alert("Post deleted successfully");
+          setPosts(posts.filter((post) => post._id !== postId));
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+  }
+
   const getPosts = async () => {
     try {
       const data = await fetch("/api/post/getpost");
@@ -11,7 +31,7 @@ export default function AdminPagePost() {
       if (!data.ok) {
         throw new Error(res.errorMessage);
       }
-      setPosts(res);
+      setPosts(res.posts);
     } catch (err) {
       console.log(err.message);
     }
@@ -32,7 +52,7 @@ export default function AdminPagePost() {
       </div>
 
       {posts &&
-        posts.posts.map((post, i) => {
+        posts.map((post, i) => {
           return (
             <div
               key={i}
@@ -45,7 +65,7 @@ export default function AdminPagePost() {
                 <img className="rounded-lg h-10 w-16" src={post.postImage} />
               </h2> */}
               <h2 className="w-[45%] font-thin text-sm">{post.title}</h2>
-              <Link className="w-[20%] text-red-500 cursor-pointer hover:text-red-300">Delete</Link>
+              <Link onClick={() => handleDelete(post._id)} className="w-[20%] text-red-500 cursor-pointer hover:text-red-300">Delete</Link>
               <Link className="w-[15%] text-green-500 cursor-pointer hover:text-green-300">Edit</Link>
             </div>
           );
