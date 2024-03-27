@@ -8,7 +8,8 @@ const createPost = async (req, res, next) => {
   if (!req.body?.title || !req.body?.userId || !req.body?.content) {
     return next(errHandler("Incomplete Required Credentials", 400));
   }
-    try {
+  try {
+    console.log(req.body);
         const newPost = Post({ ...req.body });
         const data = await newPost.save();
         res.status(201).json({ post: data });

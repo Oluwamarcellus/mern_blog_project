@@ -1,9 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 export default function AdminPageComment() {
   const [comments, setComments] = useState(null);
-  const [showComment, setShowComment] = useState(null);
+  const user = useSelector((state) => state.user.activeUser);
+
+  const handleDelete = async (commentId) => { 
+    if (!user || !user.anAdmin) { 
+      alert("Unauthorized to delete the comment");
+      return;
+    }
+    const validate = confirm("Proceed to delete the comment?");
+    if (!validate) {
+      return;
+    }
+    try { 
+      const data = await fetch(`/api/comment/deletecomment/${commentId}`, {
+        method: "DELETE",
+      });
+      const res = await data.json();
+      if (!data.ok) {
+        throw new Error(res.errorMessage);
+      } else {
+        setComments(comments.filter((comment) => comment._id !== commentId));
+      }
+    } catch (error) { 
+      console.log(error.message);
+    }
+  }
 
   const getComments = async () => {
     try {
@@ -12,7 +37,7 @@ export default function AdminPageComment() {
       if (!data.ok) {
         throw new Error(res.errorMessage);
       }
-      setComments(res);
+      setComments(res.comments);
     } catch (err) {
       console.log(err.message);
     }
@@ -32,7 +57,7 @@ export default function AdminPageComment() {
       </div>
 
       {comments &&
-        comments.comments.map((comment, i) => {
+        comments.map((comment, i) => {
           return (
               <div
                 key={i}
@@ -45,7 +70,7 @@ export default function AdminPageComment() {
                       { comment.content}
                 </h2>
                 <h2 className="w-[50%] font-thin text-xs overflow-hidden">{comment.userId}</h2>
-                <div className="w-[5%]">
+              <div onClick={ () => handleDelete(comment._id) } className="w-[5%]">
                   <MdDeleteForever className="text-red-500 cursor-pointer text-lg" />
                 </div>
               </div>

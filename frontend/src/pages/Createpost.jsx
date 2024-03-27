@@ -53,7 +53,7 @@ export default function () {
         },
         () => {
           getDownloadURL(task.snapshot.ref).then((downloadURL) => {
-            setPostData({ ...postData, imageUrl: downloadURL });
+            setPostData({ ...postData, postImage: downloadURL });
             setImageUrl(downloadURL);
             setImageUploadProgress(false);
           });
@@ -92,7 +92,6 @@ export default function () {
       } else {
         setPostUploadSuccess("Post published successfully");
         setPostUploadProgress(false);
-        console.log(res);
         navigate(`/post/${res?.post?._id}`);
       }
     } catch (err) {

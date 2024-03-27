@@ -62,7 +62,7 @@ export const deleteComment = async (req, res, next) => {
       return next(errHandler(404, "Comment not found"));
     }
 
-    if (req.user.id !== comment.userId && !req.user.isAdmin) {
+    if (req.user.id !== comment.userId && !req.user.anAdmin) {
       return next(errHandler("Unauthorized to delete", 403));
     }
 

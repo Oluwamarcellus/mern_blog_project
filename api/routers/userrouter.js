@@ -15,7 +15,7 @@ router.post("/signup", signup);
 router.post("/signin", signin);
 router.get("/signout", signout);
 router.post("/google_auth", googleauth);
-router.post("/delete", authenticator, deleteUser);
+router.post("/delete/:userId", authenticator, deleteUser);
 router.put("/update", authenticator, updateuser);
 router.get("/getusers", getUsers);
 

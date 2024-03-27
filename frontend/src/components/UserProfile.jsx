@@ -111,11 +111,11 @@ export default function UserProfile({ user, handleSignout }) {
     }
   };
 
-  const handleDelete = async () => {
+  const handleDelete = async (userId) => {
     const verified = confirm("Delete Account?");
-    if (verified) {
+    if (verified && userId) {
       try {
-        const data = await fetch("/api/user/delete", {
+        const data = await fetch(`/api/user/delete/${userId}`, {
           method: "POST",
         });
         if (data.ok) {
@@ -232,7 +232,7 @@ export default function UserProfile({ user, handleSignout }) {
       )}
       <div className="flex justify-between px-2 mt-2">
         <span
-          onClick={handleDelete}
+          onClick={() => handleDelete(user?._id)}
           className="text-red-500 text-sm cursor-pointer"
         >
           Delete Account

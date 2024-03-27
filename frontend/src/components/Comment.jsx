@@ -67,6 +67,10 @@ export default function Comment({ postId }) {
   }, [postId]);
   
   const handleLike = async (commentId) => {
+    if (!user) {
+      alert("Please sign in to like a comment");
+      return;
+    }
     try { 
       const data = await fetch(`/api/comment/likecomment/${commentId}`, {
         method: "PUT",
@@ -85,6 +89,14 @@ export default function Comment({ postId }) {
   }
   
   const handleDelete = async (commentId) => {
+    if (!user) {
+      alert("Please sign in");
+      return;
+    }
+    const validate = confirm("Proceed to delete the comment?");
+    if (!validate) {
+      return;
+    }
     try { 
       const data = await fetch(`/api/comment/deletecomment/${commentId}`, {
         method: "DELETE",
