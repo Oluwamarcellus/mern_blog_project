@@ -20,6 +20,7 @@ import Createpost from "./pages/Createpost";
 import ProtectRouteAdmin from "./components/ProtectRouteAdmin";
 import Search from "./pages/Search";
 import PostPage from "./pages/PostPage";
+import EditPost from "./pages/EditPost";
 
 export default function App() {
   const router = createBrowserRouter(
@@ -45,13 +46,15 @@ export default function App() {
             </ProtectRouteAdmin>
           }
         />
+        <Route path="/search" element={<Search />} />
+        <Route path="/post/:postId" element={<PostPage />} />
         <Route
-          path="/search"
-          element={<Search />}
-        />
-        <Route
-          path="/post/:postId"
-          element={<PostPage />}
+          path="/post/edit/:postId"
+          element={
+            <ProtectRouteAdmin>
+              <EditPost />
+            </ProtectRouteAdmin>
+          }
         />
       </Route>
     )

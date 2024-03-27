@@ -66,7 +66,7 @@ export default function AdminPagePost() {
               </h2> */}
               <h2 className="w-[45%] font-thin text-sm">{post.title}</h2>
               <Link onClick={() => handleDelete(post._id)} className="w-[20%] text-red-500 cursor-pointer hover:text-red-300">Delete</Link>
-              <Link className="w-[15%] text-green-500 cursor-pointer hover:text-green-300">Edit</Link>
+              <Link to={`/post/edit/${post._id}`} className="w-[15%] text-green-500 cursor-pointer hover:text-green-300">Edit</Link>
             </div>
           );
         })}
