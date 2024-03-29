@@ -13,7 +13,7 @@ export default function Search() {
   const location = useLocation();
 
   const handleMorePost = async () => { 
-    const searchTerm = formData.searchTerm ? formData.searchTerm : null; 
+    const searchTerm = formData.searchterm ? formData.searchterm : null; 
     const sortby = formData.sortBy ? formData.sortBy : null;
     try {
       setFetchingMore(true);
