@@ -7,7 +7,30 @@ export default function Search() {
   const [postData, setPostData] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
   const [fetchingError, setFetchingError] = useState("");
+  const [offset, setOffset] = useState(0);
+  const [limit, setLimit] = useState(6);
+  const [fetchingMore, setFetchingMore] = useState(false);
   const location = useLocation();
+
+  const handleMorePost = async () => { 
+    const searchTerm = formData.searchTerm ? formData.searchTerm : null; 
+    const sortby = formData.sortBy ? formData.sortBy : null;
+    try {
+      setFetchingMore(true);
+      const data = await fetch(`/api/post/getpost?limit=${limit}&offset=${offset + limit}${searchTerm ? `&searchterm=${searchTerm}` : ''}${sortby ? `&sortBy=${sortby}` : ''}`);
+      const res = await data.json();
+      if (!data.ok) {
+        throw new Error(res.errMessage);
+      } else {
+        setPostData(postData ? [...postData, ...res.posts] : null);
+        setOffset(offset + limit);
+        setFetchingMore(false);
+      }
+    } catch (err) { 
+      console.log(err.message);
+      setFetchingMore(false);
+    }
+  }
 
   const getPost = async (searchterm = null, sortBy = null) => {
     try {
@@ -18,12 +41,13 @@ export default function Search() {
 
       setIsFetching(true);
       setFetchingError("");
-      const data = await fetch(`/api/post/getpost?${urlQuery.toString()}`);
+      const data = await fetch(`/api/post/getpost?limit=${limit}&${urlQuery.toString()}`);
       const res = await data.json();
       if (!data.ok) {
         throw new Error(res.errorMessage);
       }
       setPostData(res.posts);
+      setOffset(0);
       setIsFetching(false);
     } catch (err) {
       console.log(err.message);
@@ -117,6 +141,7 @@ export default function Search() {
           )}
 
         </div>
+        {postData && postData.length % limit === 0 && <div className="text-center mb-6"><button onClick={handleMorePost} disabled={fetchingMore} className="disabled:bg-gray-200/40 text-sm border p-2 rounded-lg bg-gray-300/40 hover:bg-gray-300/90 text-[#6e666e]">{fetchingMore ? 'Showing ...' : 'Show More'}</button></div>}
       </div>
     </div>
   );
