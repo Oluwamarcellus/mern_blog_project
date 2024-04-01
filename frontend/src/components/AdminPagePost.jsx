@@ -4,7 +4,33 @@ import { useSelector } from "react-redux";
 
 export default function AdminPagePost() {
   const [posts, setPosts] = useState(null);
+  const [limit, setLimit] = useState(10);
+  const [offset, setOffset] = useState(0);
+  const [chkOffset, setChkOffset] = useState(true);
+  const [isFilter, setIsFilter] = useState(false);
+  const [fetchingMore, setFetchingMore] = useState(false);
   const user = useSelector((state) => state.user.activeUser);
+
+  const handleMorePost = async () => { 
+    try {
+      setFetchingMore(true);
+      const data = await fetch(
+        `/api/post/getpost?offset=${offset + limit}&limit=${limit}${isFilter ? `&userId=${user._id}` : ''}`
+      );
+      const res = await data.json();
+      if (!data.ok) {
+        throw new Error(res.errorMessage);
+      }
+      setChkOffset(res.posts.length === limit);
+      setPosts([...posts, ...res.posts]);
+      setOffset(offset + limit);
+      setFetchingMore(false);
+    } catch (err) {
+      console.log(err.message);
+      setFetchingMore(false);
+      setChkOffset(res.posts.length === limit);
+    }
+  }
 
   const handleDelete = async (postId) => {
     const validate = confirm("Proceed with deleting post?");
@@ -29,13 +55,16 @@ export default function AdminPagePost() {
   const handleFilter = async (filter) => {
     try {
       const data = await fetch(
-        `/api/post/getpost${filter ? `?userId=${filter}` : ""}`
+        `/api/post/getpost?offset=0&limit=${limit}${filter ? `?userId=${filter}` : ""}`
       );
+      setIsFilter(filter ? true : false);
+      setChkOffset(true);
       const res = await data.json();
       if (!data.ok) {
         throw new Error(res.errorMessage);
       }
       setPosts(res.posts);
+      setOffset(0);
     } catch (err) {
       console.log(err.message);
     }
@@ -96,6 +125,7 @@ export default function AdminPagePost() {
             </div>
           );
         })}
+      {posts && posts.length % limit === 0 && chkOffset && <div className="text-center my-6"><button onClick={handleMorePost} disabled={fetchingMore} className="disabled:bg-gray-200/40 text-sm border p-2 rounded-lg bg-gray-300/40 hover:bg-gray-300/90 text-[#6e666e]">{fetchingMore ? 'Showing ...' : `Show More`}</button></div>}
     </div>
   );
 }

@@ -5,9 +5,11 @@ import { useLocation } from "react-router-dom";
 export default function Search() {
   const [formData, setFormData] = useState({});
   const [postData, setPostData] = useState(null);
+  const [totalPosts, setTotalPosts] = useState(0);
   const [isFetching, setIsFetching] = useState(false);
   const [fetchingError, setFetchingError] = useState("");
   const [offset, setOffset] = useState(0);
+  const [chkOffset, setChkOffset] = useState(true);
   const [limit, setLimit] = useState(6);
   const [fetchingMore, setFetchingMore] = useState(false);
   const location = useLocation();
@@ -25,10 +27,12 @@ export default function Search() {
         setPostData(postData ? [...postData, ...res.posts] : null);
         setOffset(offset + limit);
         setFetchingMore(false);
+        setChkOffset(res.posts.length === limit);
       }
     } catch (err) { 
       console.log(err.message);
       setFetchingMore(false);
+      setChkOffset(res.posts.length === limit);
     }
   }
 
@@ -47,6 +51,7 @@ export default function Search() {
         throw new Error(res.errorMessage);
       }
       setPostData(res.posts);
+      setTotalPosts(res.totalPosts);
       setOffset(0);
       setIsFetching(false);
     } catch (err) {
@@ -141,7 +146,7 @@ export default function Search() {
           )}
 
         </div>
-        {postData && postData.length % limit === 0 && <div className="text-center mb-6"><button onClick={handleMorePost} disabled={fetchingMore} className="disabled:bg-gray-200/40 text-sm border p-2 rounded-lg bg-gray-300/40 hover:bg-gray-300/90 text-[#6e666e]">{fetchingMore ? 'Showing ...' : 'Show More'}</button></div>}
+        {postData && postData.length % limit === 0 && chkOffset && <div className="text-center mb-6"><button onClick={handleMorePost} disabled={fetchingMore} className="disabled:bg-gray-200/40 text-sm border p-2 rounded-lg bg-gray-300/40 hover:bg-gray-300/90 text-[#6e666e]">{fetchingMore ? 'Showing ...' : `Show More (${offset + limit}/${totalPosts})`}</button></div>}
       </div>
     </div>
   );
