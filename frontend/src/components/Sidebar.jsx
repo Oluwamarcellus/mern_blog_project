@@ -11,9 +11,9 @@ export default function Sidebar({ user, handleSignout }) {
     <div className="md:basis-56 p-4 bg-[rgba(0,0,0,.02)]">
       {user && user.anAdmin && (
         <Link to="/profile?action=dashboard">
-          <div className="hover:bg-[rgba(0,0,0,.05)] p-2 rounded-md cursor-pointer mb-3">
+          <div className="dark:hover:bg-gray-600 hover:bg-[rgba(0,0,0,.05)] p-2 rounded-md cursor-pointer mb-3">
             <div className="flex items-center gap-2">
-              <RiDashboard2Fill className="text-2xl text-gray-600" />
+              <RiDashboard2Fill className="dark:text-gray-400 text-2xl text-gray-600" />
               <h2 className="text-sm">Dashboard</h2>
             </div>
           </div>
@@ -21,9 +21,9 @@ export default function Sidebar({ user, handleSignout }) {
       )}
 
       <Link to="/profile?action=profile">
-        <div className="flex justify-between items-center hover:bg-[rgba(0,0,0,.05)] p-2 rounded-md cursor-pointer">
+        <div className="flex justify-between items-center dark:hover:bg-gray-600 hover:bg-[rgba(0,0,0,.05)] p-2 rounded-md cursor-pointer">
           <div className="flex items-center gap-2">
-            <IoPersonCircle className="text-2xl text-gray-600" />
+            <IoPersonCircle className="dark:text-gray-400 text-2xl text-gray-600" />
             <h2 className="text-sm">Profile</h2>
           </div>
 
@@ -36,25 +36,25 @@ export default function Sidebar({ user, handleSignout }) {
       {user && user.anAdmin && (
         <>
           <Link to="/profile?action=comments">
-            <div className="hover:bg-[rgba(0,0,0,.05)] p-2 rounded-md cursor-pointer mt-3">
+            <div className="dark:hover:bg-gray-600 hover:bg-[rgba(0,0,0,.05)] p-2 rounded-md cursor-pointer mt-3">
               <div className="flex items-center gap-2">
-                <MdInsertComment className="text-2xl text-gray-600" />
+                <MdInsertComment className="dark:text-gray-400 text-2xl text-gray-600" />
                 <h2 className="text-sm">Comments</h2>
               </div>
             </div>
           </Link>
           <Link to="/profile?action=users">
-            <div className="hover:bg-[rgba(0,0,0,.05)] p-2 rounded-md cursor-pointer mt-3">
+            <div className="dark:hover:bg-gray-600 hover:bg-[rgba(0,0,0,.05)] p-2 rounded-md cursor-pointer mt-3">
               <div className="flex items-center gap-2">
-                <PiUsersThreeFill className="text-2xl text-gray-600" />
+                <PiUsersThreeFill className="dark:text-gray-400 text-2xl text-gray-600" />
                 <h2 className="text-sm">Users</h2>
               </div>
             </div>
           </Link>
           <Link to="/profile?action=posts">
-            <div className="hover:bg-[rgba(0,0,0,.05)] p-2 rounded-md cursor-pointer mt-3">
+            <div className="dark:hover:bg-gray-600 hover:bg-[rgba(0,0,0,.05)] p-2 rounded-md cursor-pointer mt-3">
               <div className="flex items-center gap-2">
-                <MdPostAdd className="text-2xl text-gray-600" />
+                <MdPostAdd className="dark:text-gray-400 text-2xl text-gray-600" />
                 <h2 className="text-sm">Posts</h2>
               </div>
             </div>
@@ -64,10 +64,10 @@ export default function Sidebar({ user, handleSignout }) {
 
       <div
         onClick={handleSignout}
-        className="hover:bg-[rgba(0,0,0,.05)] p-2 rounded-md cursor-pointer mt-3"
+        className="dark:hover:bg-gray-600 hover:bg-[rgba(0,0,0,.05)] p-2 rounded-md cursor-pointer mt-3"
       >
         <div className="flex items-center gap-2">
-          <FaSignOutAlt className="text-2xl text-gray-600" />
+          <FaSignOutAlt className="dark:text-gray-400 text-2xl text-gray-600" />
           <h2 className="text-sm">Sign Out</h2>
         </div>
       </div>

@@ -105,7 +105,7 @@ export default function () {
       <h1 className="mt-6 text-center text-3xl font-medium">Create post</h1>
       <form className="mt-6 mb-4">
         <input
-          className="text-sm border w-full p-2 rounded-lg outline-none focus:border-2 focus:border-purple-400"
+          className="dark:text-gray-600 text-sm border w-full p-2 rounded-lg outline-none focus:border-2 focus:border-purple-400"
           type="text"
           name="title"
           id="title"

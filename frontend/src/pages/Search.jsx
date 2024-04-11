@@ -85,7 +85,7 @@ export default function Search() {
             Search Word:{" "}
           </label>
           <input
-            className="w-28 p-3 mb-8 placeholder:text-xs outline-none border rounded-lg"
+            className="w-28 p-3 mb-8 placeholder:text-xs outline-none border rounded-lg dark:text-gray-600"
             type="text"
             placeholder="Search for..."
             id="searchterm"
@@ -95,11 +95,11 @@ export default function Search() {
             }
           />
           <div></div>
-          <label className="font-semibold " htmlFor="sort">
+          <label className="font-semibold" htmlFor="sort">
             Sort:{" "}
           </label>
           <select
-            className="w-28 p-3 outline-none border rounded-lg"
+            className="w-28 p-3 outline-none border rounded-lg dark:text-gray-600"
             id="sort"
             name="sort"
             onChange={(e) =>
@@ -146,7 +146,7 @@ export default function Search() {
           )}
 
         </div>
-        {postData && postData.length % limit === 0 && chkOffset && <div className="text-center mb-6"><button onClick={handleMorePost} disabled={fetchingMore} className="disabled:bg-gray-200/40 text-sm border p-2 rounded-lg bg-gray-300/40 hover:bg-gray-300/90 text-[#6e666e]">{fetchingMore ? 'Showing ...' : `Show More (${offset + limit}/${totalPosts})`}</button></div>}
+        {postData && postData.length % limit === 0 && chkOffset && <div className="text-center mb-6"><button onClick={handleMorePost} disabled={fetchingMore} className="disabled:bg-gray-200/40 text-sm border p-2 rounded-lg bg-gray-300/40 hover:bg-gray-300/90 text-[#6e666e] dark:text-white">{fetchingMore ? 'Showing ...' : `Show More (${offset + limit}/${totalPosts})`}</button></div>}
       </div>
     </div>
   );

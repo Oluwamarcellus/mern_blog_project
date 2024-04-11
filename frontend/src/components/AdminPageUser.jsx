@@ -55,7 +55,7 @@ export default function AdminPageUser() {
 
   return (
     <div className="p-4 grow md:max-w-[60%] md:mx-auto">
-      <div className="flex rounded-md gap-3 bg-gray-100/80 py-2 text-sm font-medium justify-between px-4">
+      <div className="flex rounded-md gap-3 dark:bg-gray-600 bg-gray-100/80 py-2 text-sm font-medium justify-between px-4">
         <h2 className="w-[15%]">IMAGE</h2>
         <h2 className="w-[50%]">USERNAME</h2>
         <h2 className="w-[10%]">ADMIN</h2>

@@ -132,7 +132,7 @@ export default function Comment({ postId }) {
             </div>
             <div className="border-2 rounded-lg overflow-hidden p-4 mt-3">
               <textarea
-                className="w-full p-3 text-sm outline-none border rounded-lg placeholder:text-sm"
+                className="dark:text-gray-600 w-full p-3 text-sm outline-none border rounded-lg placeholder:text-sm"
                 name="comment"
                 id="comment"
                 maxLength={200}
@@ -144,7 +144,7 @@ export default function Comment({ postId }) {
                 }}
               ></textarea>
               <div className="flex items-center justify-between py-2">
-                <span className="text-xs text-gray-500/70">
+                <span className="dark:text-gray-300 text-xs text-gray-500/70">
                   {textareaLimit.toString()} characters remaining
                 </span>
                 <button
@@ -174,7 +174,7 @@ export default function Comment({ postId }) {
             <div className="text-sm">
               <h1>
                 Comments{" "}
-                <span className="border p-1 border-black/40">
+                <span className="dark:border-gray-400 border p-1 border-black/40">
                   {commentData.length}
                 </span>
               </h1>
@@ -192,7 +192,7 @@ export default function Comment({ postId }) {
                     <h1 className="text-sm mb-2 font-medium">
                       @{comment.userName || "Anonymous"}
                     </h1>
-                    <p className="text-xs text-gray-500/90">
+                    <p className="dark:text-gray-400 text-xs text-gray-500/90">
                       {comment.content}
                     </p>
                     <div className="flex mt-3 gap-4">

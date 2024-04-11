@@ -133,7 +133,7 @@ export default function EditPost() {
         <h1 className="mt-6 text-center text-3xl font-medium">Edit post</h1>
         <form className="mt-6 mb-4">
           <input
-            className="text-sm border w-full p-2 rounded-lg outline-none focus:border-2 focus:border-purple-400"
+            className="dark:text-gray-600 text-sm border w-full p-2 rounded-lg outline-none focus:border-2 focus:border-purple-400"
             type="text"
             name="title"
             id="title"
@@ -185,7 +185,7 @@ export default function EditPost() {
           )}
           <ReactQuill
             value={ postData.content}
-            className="my-4 h-80"
+            className="my-4 h-80 "
             theme="snow"
             placeholder="Type here..."
             required

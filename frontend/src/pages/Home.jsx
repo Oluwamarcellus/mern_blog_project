@@ -59,7 +59,7 @@ export default function Home() {
           )}
         </div>
         <div className="text-center">
-        <Link className="text-sm border p-2 rounded-lg bg-gray-300/40 hover:bg-gray-300/90 text-[#6e666e]" to={"/search"}>Explore more posts</Link>
+        <Link className="text-sm border p-2 rounded-lg bg-gray-300/40 hover:bg-gray-300/90 text-[#6e666e] dark:text-white" to={"/search"}>Explore more posts</Link>
       </div>
       </div>
       

@@ -76,19 +76,19 @@ export default function AdminPagePost() {
 
   return (
     <div className="p-4 grow">
-      <div className="w-full py-2 my-2 bg-gray-300/50 border rounded-lg px-2 text-center">
+      <div className="w-full py-2 my-2 dark:bg-gray-700 bg-gray-300/50 border rounded-lg px-2 text-center">
         <select
           className="outline-none text-sm bg-transparent"
           onChange={(e) => handleFilter(e.target.value)}
           name=""
           id=""
         >
-          <option value={user._id}>My posts</option>
-          <option value="">All posts</option>
+          <option className='dark:text-gray-600' value={user._id}>My posts</option>
+          <option className='dark:text-gray-600' value="">All posts</option>
         </select>
       </div>
 
-      <div className="flex rounded-md gap-3 bg-gray-100/80 py-2 text-sm font-medium justify-between px-4">
+      <div className="flex rounded-md gap-3 dark:bg-gray-600 bg-gray-100/80 py-2 text-sm font-medium justify-between px-4">
         <h2 className="w-[20%]">DATE</h2>
         {/* <h2 className="w-[17%]">POST IMAGE</h2> */}
         <h2 className="w-[45%]">POST TITLE</h2>

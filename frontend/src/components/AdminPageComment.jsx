@@ -49,7 +49,7 @@ export default function AdminPageComment() {
 
   return (
     <div className="p-4 overflow-auto grow">
-      <div className="flex rounded-md gap-2 bg-gray-100/80 py-2 text-sm font-medium justify-between px-4">
+      <div className="flex rounded-md gap-2 dark:bg-gray-600 bg-gray-100/80 py-2 text-sm font-medium justify-between px-4">
         <h2 className="w-[15%]">DATE</h2>
         <h2 className="w-[30%]">COMMENT</h2>
         <h2 className="w-[50%]">USER ID</h2>

@@ -59,7 +59,7 @@ export default function SignIn() {
   return (
     <div className="py-24 px-4 flex flex-col md:flex-row gap-8 md:items-center mx-auto w-full max-w-3xl">
       <div className="md:flex-1">
-        <div className="select-none text-3xl font-semibold mb-4 text-gray-700">
+        <div className="select-none text-3xl font-semibold mb-4 text-gray-700 dark:text-white">
           <span className=" text-white px-3 py-1 rounded-md bg-gradient-to-r from-orange-500 to-purple-500">
             Yowale's
           </span>

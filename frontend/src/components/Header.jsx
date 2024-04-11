@@ -51,10 +51,10 @@ export default function Header() {
             Blog
           </div>
         </Link>
-        <div onClick={ () => navigate('/search')} className="md:hidden rounded-full border px-3 py-2 cursor-pointer">
+        <div onClick={ () => navigate('/search')} className="md:hidden rounded-full border dark:border-gray-500 px-3 py-2 cursor-pointer">
         <CiSearch className="" />
         </div>
-        <input onKeyDown={ handleSubmission} onChange={ (e) => setInputData(e.target.value)} className="rounded-lg border px-2 py-2 text-sm hidden md:block outline-none" type="text" placeholder="Search..." />
+        <input onKeyDown={ handleSubmission} onChange={ (e) => setInputData(e.target.value)} className="rounded-lg border px-2 py-2 text-sm hidden md:block outline-none dark:bg-gray-100 dark:text-black" type="text" placeholder="Search..." />
         
         <ul className="hidden sm:flex gap-3 cursor-pointer font-medium text-sm">
           <Link to="/" className="hover:opacity-50">
@@ -69,7 +69,7 @@ export default function Header() {
         </ul>
         <div className="flex items-center gap-2">
           <div
-            className="bg-[rgba(0,0,0,.01)] border-orange-500 rounded-full border px-3 py-2 cursor-pointer"
+            className="bg-[rgba(0,0,0,.01)] rounded-full px-3 py-2 cursor-pointer"
             onClick={() => dispatch(setTheme())}
           >
             {themeState.mode === "light" ? <FaMoon /> : <FaSun />}
@@ -81,7 +81,7 @@ export default function Header() {
               </button>
             </Link>
           ) : (
-            <div className="relative">
+            <div className="relative dark:text-gray-600">
                 <img
                   onClick={() => setProfileToggle(!profileToggle)}
                 src={userState.activeUser.imageUrl}

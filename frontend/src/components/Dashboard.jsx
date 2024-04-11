@@ -147,7 +147,7 @@ export default function Dashboard() {
               See all
             </Link>
           </div>
-          <div className="flex rounded-md bg-gray-100/80 py-2 text-sm font-medium justify-between px-4">
+          <div className="flex rounded-md bg-gray-100/80 dark:bg-gray-600 py-2 text-sm font-medium justify-between px-4">
             <h2 className="w-[25%]">POST IMAGE</h2>
             <h2 className="w-[50%]">POST TITLE</h2>
             <h2 className="w-[25%] text-start">TIME CREATED</h2>

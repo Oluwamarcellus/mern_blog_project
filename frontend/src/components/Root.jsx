@@ -12,7 +12,7 @@ export default function Root() {
   //   console.log(theme);
   // }, [theme]);
   return (
-    <div className={ `${theme} text-gray-600` }>
+    <div className={ `${theme} text-gray-600 dark:bg-gray-800 dark:text-white` }>
       <Header/>
       <Outlet />
       <Footer/>
