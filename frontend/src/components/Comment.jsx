@@ -162,7 +162,7 @@ export default function Comment({ postId }) {
         ) : (
           <h1 className="text-sm text-green-400">
             You need to sign in to comment.{" "}
-            <Link className="text-blue-400" to="/login">
+            <Link className="text-blue-400" to="/signin">
               Log in
             </Link>
           </h1>
