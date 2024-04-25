@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 export default function AdminPagePost() {
   const [posts, setPosts] = useState(null);
@@ -43,10 +44,11 @@ export default function AdminPagePost() {
         if (!data.ok) {
           throw new Error(res.errorMessage);
         } else {
-          alert("Post deleted successfully");
+          toast.success("Post deleted successfully");
           setPosts(posts.filter((post) => post._id !== postId));
         }
       } catch (err) {
+        toast.error("Error deleting post");
         console.log(err.message);
       }
     }

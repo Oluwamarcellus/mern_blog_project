@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AiFillLike } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Comment({ postId }) {
   const user = useSelector((state) => state.user.activeUser);
@@ -68,7 +69,7 @@ export default function Comment({ postId }) {
   
   const handleLike = async (commentId) => {
     if (!user) {
-      alert("Please sign in to like a comment");
+      toast.error('You are not signed in');
       return;
     }
     try { 
@@ -84,13 +85,14 @@ export default function Comment({ postId }) {
         }));
       }
     } catch (err) {
+      toast.error('Please sign in again, an error occured');
       console.log(err.message);
      }
   }
   
   const handleDelete = async (commentId) => {
     if (!user) {
-      alert("Please sign in");
+      toast.error("Please sign in");
       return;
     }
     const validate = confirm("Proceed to delete the comment?");

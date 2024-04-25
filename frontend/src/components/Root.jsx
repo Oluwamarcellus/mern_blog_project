@@ -3,6 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { Toaster } from 'react-hot-toast';
 
 
 export default function Root() {
@@ -15,7 +16,8 @@ export default function Root() {
     <div className={ `${theme} text-gray-600 dark:bg-gray-800 dark:text-white` }>
       <Header/>
       <Outlet />
-      <Footer/>
+      <Footer />
+      <Toaster />
     </div>
   );
 }

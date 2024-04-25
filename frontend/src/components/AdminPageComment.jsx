@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 export default function AdminPageComment() {
   const [comments, setComments] = useState(null);
@@ -8,7 +9,7 @@ export default function AdminPageComment() {
 
   const handleDelete = async (commentId) => { 
     if (!user || !user.anAdmin) { 
-      alert("Unauthorized to delete the comment");
+      toast.error("Unauthorized to delete the comment");
       return;
     }
     const validate = confirm("Proceed to delete the comment?");
@@ -23,9 +24,11 @@ export default function AdminPageComment() {
       if (!data.ok) {
         throw new Error(res.errorMessage);
       } else {
+        toast.success("Comment deleted");
         setComments(comments.filter((comment) => comment._id !== commentId));
       }
     } catch (error) { 
+      toast.error("Error deleting comment");
       console.log(error.message);
     }
   }

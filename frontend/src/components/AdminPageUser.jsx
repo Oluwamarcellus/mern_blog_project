@@ -5,6 +5,7 @@ import { IoMdClose } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { clearActiveUser } from "../redux/user.slice";
+import toast from "react-hot-toast";
 
 export default function AdminPageUser() {
   const [users, setUsers] = useState(null);
@@ -19,7 +20,7 @@ export default function AdminPageUser() {
           method: "POST",
         });
         if (data.ok) {
-          alert("Account deleted successfully");
+          toast.success("Account deleted successfully");
           if (userId === user?._id) {
             dispatch(clearActiveUser());
             navigate("/signin");
@@ -27,10 +28,10 @@ export default function AdminPageUser() {
             setUsers(users.filter((user) => user._id !== userId));
           }
         } else {
-          alert("Failed to delete account now try again later");
+          toast.error("Failed to delete account now try again later");
         }
       } catch (err) {
-        alert("Error deleting account now try again later");
+        toast.error("Error deleting account now try again later");
         console.log(err.message);
       }
     }
